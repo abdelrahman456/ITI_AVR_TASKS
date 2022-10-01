@@ -15,6 +15,7 @@
 #include "ADC/ADC_CONFIG.h"
 #include "LCD/LCD_INTERFACE.h"
 #include "GIE/GIE_INTERFACE.h"
+
 #if 0
 void A_LED(void){
 	u16 T;
@@ -53,6 +54,21 @@ void A_LED(void){
 
 }
 #endif
+/* BAR GRAPH ALGORITHM
+ * LEVELS
+ * 1---->1--------->0x01
+ * 3---->11--------->0x03
+ * 7---->111 --------->0x07
+ * 15---->1111--------->0x0f
+ * 31---->11111--------->0x1f
+ * 63---->111111--------->0x3f
+ * 127---->1111111--------->0x7f
+ * 255---->11111111--------->0xff
+ * *******************************************
+ * ADC READ 10 BIT AND WE HAVE 8 LEVELS TO OUTPUT should shift adc by 3
+ * level=(ADC>>3)/128
+ * OUT=(2<<level)-1			(2**n - 1)			(2<<level==2**level)
+ * */
 u16 T;
 int main(void){
 
